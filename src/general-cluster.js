@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express'),
     cluster = require('cluster'),
     cpus = require('os').cpus().length;
@@ -31,4 +33,3 @@ function GeneralCluster(app) {
 }
 
 module.exports = GeneralCluster;
-

@@ -13,8 +13,6 @@ module.exports = function(grunt) {
       }
     }
   });
-  // load task plugins
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  // register main tasks
   grunt.registerTask('build', ['uglify']);
 };
