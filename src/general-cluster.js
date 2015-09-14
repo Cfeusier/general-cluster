@@ -8,13 +8,16 @@ function _isExpressApp(maybe) {
   return !!maybe && !!maybe.set && !!maybe.use;
 }
 
-function _charge(theGeneral) {
+function _charge(theGeneral, listenArgs) {
   if (cluster.isMaster) {
     for (var i = 0; i < cpus; i++) {
       cluster.fork();
     }
   } else {
-    theGeneral.listen(theGeneral.port || 3000);
+    if (typeof listenArgs[0] !== 'number') {
+      listenArgs.unshift(3000);
+    }
+    theGeneral.listen.apply(theGeneral, listenArgs);
   }
   return theGeneral;
 }
@@ -29,7 +32,8 @@ function GeneralCluster(app) {
   } else {
     theGeneral = !_isExpressApp(app) ? express(app) : app;
   }
-  return _charge(theGeneral);
+  var listenArgs = Array.prototype.slice.call(arguments, 1);
+  return _charge(theGeneral, listenArgs);
 }
 
 module.exports = GeneralCluster;

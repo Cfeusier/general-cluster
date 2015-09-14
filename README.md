@@ -51,7 +51,7 @@ var GeneralCluster = require('general-cluster');
 **General Cluster** is simple to use.
 
 1. Setup your _Express_ application as you normally would
-2. Instead of calling `listen()` to start your _Express_ server, pass your application to **General Cluster**
+2. Instead of calling `listen()` to start your _Express_ server, pass your application to **General Cluster**, along with the options that you would normally pass to `.listen`
 3. Your application will then be served from a node *cluster*
 
 ```js
@@ -64,8 +64,18 @@ app.get('/*', function(req, res) {
   res.send('Hello World');
 });
 
+var optionalPort = 3000;
+var optionalListeningCb = function() {
+  console.log("The General is listening on port: " + optionalPort);
+};
+var optionalHostName = '127.0.0.1';
+var optionalBacklog = 511;
+
 // pass configured express app to GeneralCluster to start server
-var clusterApp = GeneralCluster(app);
+var clusterAppDefaultListenArgs = GeneralCluster(app);
+// optionally: pass along a port, hostname, backlog, or callback (see https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback)
+// NOTE: the callback will be triggered for each process that binds to the given port
+var clusterAppCustomListenArgs = GeneralCluster(app, optionalPort, optionalHostName, optionalBacklog, optionalListeningCb);
 ```
 
 ## Contributing to _General Cluster_
