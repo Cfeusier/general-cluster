@@ -1,6 +1,6 @@
 {
   "name": "general-cluster",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "express running on node clusters",
   "main": "./dist/general-cluster.min.js",
   "author": "Clark Feusier <cfeusier@gmail.com> (http://clarkfeusier.com/)",
